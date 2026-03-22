@@ -1,17 +1,47 @@
-# 🤖 HUNTER XMD PRO — DATA REPO
-
 <div align="center">
 
-![Hunter XMD Pro](https://img.shields.io/badge/HUNTER%20XMD%20PRO-v3.0.0-00f5ff?style=for-the-badge&logo=whatsapp&logoColor=white)
-![Powered By](https://img.shields.io/badge/Powered%20By-ObedTechX-7c3aed?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-10b981?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-f59e0b?style=for-the-badge)
+```
+██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗     ██╗  ██╗███╗   ███╗██████╗ 
+██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗    ╚██╗██╔╝████╗ ████║██╔══██╗
+███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝     ╚███╔╝ ██╔████╔██║██║  ██║
+██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗     ██╔██╗ ██║╚██╔╝██║██║  ██║
+██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║    ██╔╝ ██╗██║ ╚═╝ ██║██████╔╝
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ 
+                                                                       P R O  v3.0.0
+```
 
-**WhatsApp Bot Data Repository — Auto Reply, Stickers & Voice Notes**
+<img src="https://readme-typing-svg.demolab.com?font=Orbitron&size=22&duration=3000&pause=1000&color=00F5FF&center=true&vCenter=true&width=600&lines=🤖+HUNTER+XMD+PRO+v3.0.0;⚡+Powered+by+ObedTechX;🇰🇪+Made+in+Kenya;🔥+WhatsApp+Bot+Data+Repo" alt="Typing SVG" />
 
-[📋 View Dashboard](https://obedweb3.github.io/ObedTech-data/) • [💬 Get Premium](https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION) • [🐛 Report Bug](https://github.com/Obedweb3/ObedTech-data/issues)
+<br/>
+
+[![Version](https://img.shields.io/badge/VERSION-3.0.0-00f5ff?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Obedweb3/ObedTech-data)
+[![Status](https://img.shields.io/badge/STATUS-ACTIVE-10b981?style=for-the-badge&logo=statuspage&logoColor=white)](https://github.com/Obedweb3/ObedTech-data)
+[![By](https://img.shields.io/badge/BY-ObedTechX-7c3aed?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://github.com/Obedweb3)
+[![Kenya](https://img.shields.io/badge/KENYA-🇰🇪-006600?style=for-the-badge)](https://github.com/Obedweb3)
+[![WhatsApp](https://img.shields.io/badge/PREMIUM-GET_NOW-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION)
+
+<br/>
+
+> *"Not just a bot. A digital mind built for the streets of WhatsApp."*
+> — **ObedTechX**
 
 </div>
+
+---
+
+## ⚡ What is HUNTER XMD PRO?
+
+**HUNTER XMD PRO** is a next-generation WhatsApp automation bot — engineered for speed, personality, and power. This repo is its **brain** — the data that makes it alive. Every keyword it knows, every sticker it sends, every voice it speaks lives right here.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  💬  AUTO REPLY    →  29 keyword triggers                   │
+│  🎭  AUTO STICKER  →  10 sticker responses                  │
+│  🎵  AUTO VOICE    →  6 voice note triggers                 │
+│  📋  SYSTEM MSGS   →  25 bot response templates             │
+│  🌐  DASHBOARD     →  Full web UI at index.html             │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -19,26 +49,32 @@
 
 ```
 ObedTech-data/
-├── 📄 autoreply.json          # Auto text reply keywords (29 triggers)
-├── 📄 autosticker.json        # Auto sticker keywords (10 triggers)
-├── 📄 autovoice.json          # Auto voice note keywords (6 triggers)
+│
+├── 🌐 index.html              ← Live dashboard (open in browser)
+├── 📄 autoreply.json          ← 29 auto text reply keywords
+├── 📄 autosticker.json        ← 10 auto sticker triggers
+├── 📄 autovoice.json          ← 6 auto voice note triggers
+│
 ├── 📁 MSG/
-│   └── 📄 mreply.json         # Bot system messages (25 messages)
-├── 📁 autosticker/            # Sticker media files (.webp)
-├── 📁 autovoice/              # Voice note media files (.m4a)
-│   └── 🎵 menunew.m4a
-└── 📁 logo/                   # Bot logo assets
+│   ├── 📄 mreply.json         ← 25 system bot messages
+│   └── 📄 dj.js               ← DJ module
+│
+├── 📁 autovoice/
+│   └── 🎵 menunew.m4a         ← Menu voice note audio
+│
+├── 📁 autosticker/
+│   └── 🖼️  *.webp             ← Sticker media files
+│
+└── 📁 logo/                   ← Bot logo assets
 ```
 
 ---
 
-## 🔗 Raw GitHub URLs (Use These in Your Bot)
+## 🔗 Raw GitHub URLs
 
-> **How to get your raw URL after uploading:**
-> Go to your file on GitHub → click the file → click **Raw** button → copy the URL from your browser.
-> Format: `https://github.com/YOUR_USERNAME/ObedTech-data/raw/refs/heads/main/FILENAME`
+> Copy these directly into your bot config. These are **live links** — they update automatically when you push changes.
 
-### 📄 JSON Config Files
+### 📄 Config Files
 
 | File | Raw URL |
 |------|---------|
@@ -47,119 +83,180 @@ ObedTech-data/
 | `autovoice.json` | `https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice.json` |
 | `MSG/mreply.json` | `https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/MSG/mreply.json` |
 
-### 🎵 Voice Note Files
+### 🎵 Media Files
 
-| Keyword | Raw URL |
-|---------|---------|
-| `hi`, `menu`, `welcome`, `OBED` | `https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a` |
+| File | Raw URL |
+|------|---------|
+| `menunew.m4a` | `https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a` |
 
-### 🎭 Sticker Files
-> Upload your `.webp` sticker files to the `/autosticker/` folder, then update `autosticker.json` with the raw URLs.
+> 💡 **Pro tip:** Replace `Obedweb3` with your GitHub username if you fork this repo.
 
 ---
 
-## 💬 Auto Reply Keywords (`autoreply.json`)
+## 💬 Auto Reply Keywords
 
-| Keyword | Response |
-|---------|----------|
+<details>
+<summary>👁️ Click to expand all 29 keywords</summary>
+
+| Keyword | Response Preview |
+|---------|-----------------|
 | `Hi` | *💖 HI!* How are you doing today? 😊 |
 | `Hello` | *👋 Hello there!* Welcome to HUNTER XMD PRO 🤖 |
 | `Hey` | *🔥 Hey!* What's up? 😎 |
 | `Good Morning` | *Good Morning 🌅* Hope your day is amazing! |
 | `Good Night` | *Good Night 🌉* Sweet dreams! 💫 |
 | `Good Afternoon` | *Good Afternoon ☀️* Hope your day is going well! |
-| `Bye` | *Bye bye... 👋* Take care, see you soon! |
-| `Thanks` | *You're welcome! 😊* Always happy to help 💪 |
-| `Help` | *🆘 Need Help?* Type *.menu* to see all commands! |
-| `premium` | Premium info + WhatsApp contact link |
-| `alive` / `ping` | Bot status response |
-| + 18 more... | *(see autoreply.json for full list)* |
+| `Bye` | *Bye bye... 👋* Take care! |
+| `Thanks` / `Thank you` | *You're welcome! 😊* Always happy to help 💪 |
+| `Help` / `Menu` | Opens command menu 📋 |
+| `Aslam o Alykum` | *Walykum Salam ❤️‍🔥* |
+| `JazakAllah` | *Wa Iyyak 🤲* |
+| `Alhamdulillah` | *Alhamdulillah 🌙* |
+| `owner` | *👑 Owner: ObedTechX* |
+| `Obed` | *💻 ObedTechX* — Creator info |
+| `love` | *Lub you too 💗😁* |
+| `alive` | Bot status check ✅ |
+| `ping` | *🏓 Pong!* |
+| `premium` | Premium info + contact link |
+| `bot` | Bot info card 🤖 |
+| + 10 more... | *(see autoreply.json)* |
+
+</details>
 
 ---
 
-## 🎭 Auto Sticker Keywords (`autosticker.json`)
+## 🎭 Sticker Triggers
 
-| Keyword | Sticker |
-|---------|---------|
-| `hi` | Greeting sticker |
-| `bye` | Goodbye sticker |
-| `love` | Love sticker |
-| `happy` | Happy sticker |
-| `sad` | Sad sticker |
-| `angry` | Angry sticker |
-| `wow` | Wow sticker |
-| `thanks` | Thanks sticker |
-| `jawad` | Custom sticker |
-| `khan` | Custom sticker |
+| Keyword | Action |
+|---------|--------|
+| `hi` `bye` `love` | Classic reactions |
+| `happy` `sad` `angry` | Emotion stickers |
+| `wow` `thanks` | Response stickers |
+| `jawad` `khan` | Custom stickers |
 
 ---
 
-## 🎵 Auto Voice Keywords (`autovoice.json`)
+## 🎵 Voice Note Triggers
 
 | Keyword | Audio |
 |---------|-------|
-| `hi` | Menu voice note |
-| `hello` | Quran recitation |
-| `menu` | Menu voice note |
-| `quran` | Quran recitation |
-| `welcome` | Welcome voice note |
-| `OBED` | ObedTech menu voice |
+| `hi` `hello` `welcome` `menu` | Menu voice intro |
+| `quran` | Quran recitation 🌙 |
+| `OBED` | ObedTech signature voice |
 
 ---
 
-## 🚀 How to Use After Uploading to GitHub
+## 🚀 Quick Start
 
-### Step 1 — Upload to GitHub
-1. Create a new repo called `ObedTech-data`
-2. Upload all files maintaining the folder structure above
-3. Make sure the repo is **Public** (so raw URLs work)
+```bash
+# 1. Clone this repo
+git clone https://github.com/Obedweb3/ObedTech-data.git
 
-### Step 2 — Get Your Raw URLs
-After uploading, your raw URLs will follow this pattern:
-```
-https://github.com/YOUR_USERNAME/ObedTech-data/raw/refs/heads/main/FILE_PATH
-```
+# 2. Open the dashboard
+open index.html   # macOS
+start index.html  # Windows
+xdg-open index.html  # Linux
 
-**Examples:**
+# 3. Copy your raw URLs from the URL Generator tab
+# 4. Paste into your HUNTER XMD PRO bot config
+# 5. Bot is alive!
 ```
-https://github.com/Obedweb3/Hunter-data/raw/refs/heads/main/autoreply.json
-https://github.com/Obedweb3/Hunter-data/raw/refs/heads/main/autosticker.json
-https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice.json
-https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/MSG/mreply.json
-https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a
-```
-
-### Step 3 — Add URLs to Your Bot Config
-Paste the raw URLs into your HUNTER XMD PRO bot configuration wherever it asks for data URLs.
 
 ---
 
-## 💎 Premium Access
+## 🌐 Dashboard Features
 
-> Want unlimited bot commands and priority support?
+Open `index.html` in any browser to access:
 
-📲 **Contact on WhatsApp:** [wa.me/254701082940](https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION)
-💰 **Price:** KES 100 / month
+```
+📊 Overview        → Stats, bot info, file structure
+💬 Auto Reply      → All 29 keyword-response pairs
+🎭 Stickers        → All sticker URLs with copy buttons
+🎵 Voice Notes     → All voice URLs with copy buttons
+📋 System Msgs     → All 25 system message templates
+🔗 All URLs        → Every URL in one place
+⚙️ URL Generator   → Type your GitHub username → get all URLs instantly
+⬇️ Downloads       → Download any file individually
+```
 
 ---
 
-## 👨‍💻 Credits
+## 💎 Get Premium Access
 
-| Role | Name |
-|------|------|
-| 🧠 Creator & Developer | **ObedTechX** |
-| 🤖 Bot Name | **HUNTER XMD PRO** |
-| 📦 Version | **3.0.0** |
-| 🌍 Based In | Kenya 🇰🇪 |
+<div align="center">
+
+| Feature | Free | 💎 Premium |
+|---------|------|-----------|
+| Basic commands | ✅ | ✅ |
+| Auto reply | ✅ | ✅ |
+| Stickers | ✅ | ✅ |
+| Unlimited commands | ❌ | ✅ |
+| Priority support | ❌ | ✅ |
+| Exclusive features | ❌ | ✅ |
+| **Price** | Free | **KES 100/month** |
+
+### 📲 [Click to Get Premium →](https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION)
+
+</div>
+
+---
+
+## 🛠️ Changelog
+
+```
+v3.0.0 (2026)
+├── ✅ Fixed: autovoice.json missing comma (syntax error repaired)
+├── ➕ Added: 14 new auto reply keywords (Hello, Hey, Thanks, Help, etc.)
+├── ➕ Added: 5 new sticker triggers (sad, angry, happy, wow, thanks)
+├── ➕ Added: 3 new voice triggers (menu, quran, welcome)
+├── ➕ Added: 7 new system messages (not_premium, cool_down, cmd_disable, etc.)
+├── 🔧 Fixed: Typos in system messages (Commad → Command, etc.)
+├── 🌐 Added: Full web dashboard (index.html)
+└── 📖 Updated: README with URL table and GitHub guide
+```
+
+---
+
+## 👨‍💻 About the Creator
+
+<div align="center">
+
+```
+  ██████╗ ██████╗ ███████╗██████╗ ████████╗███████╗ ██████╗██╗  ██╗
+ ██╔═══██╗██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██╔════╝██╔════╝██║  ██║
+ ██║   ██║██████╔╝█████╗  ██║  ██║   ██║   █████╗  ██║     ███████║
+ ██║   ██║██╔══██╗██╔══╝  ██║  ██║   ██║   ██╔══╝  ██║     ██╔══██║
+ ╚██████╔╝██████╔╝███████╗██████╔╝   ██║   ███████╗╚██████╗██║  ██║
+  ╚═════╝ ╚═════╝ ╚══════╝╚═════╝    ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝
+```
+
+**ObedTechX** — Developer · Creator · Kenya 🇰🇪
+
+[![GitHub](https://img.shields.io/badge/GitHub-Obedweb3-181717?style=flat-square&logo=github)](https://github.com/Obedweb3)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-254701082940-25D366?style=flat-square&logo=whatsapp)](https://wa.me/254701082940)
+
+</div>
 
 ---
 
 ## 📜 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+```
+MIT License — Free to use, modify and distribute.
+Built with by ObedTechX — Kenya 🇰🇪
+```
 
 ---
 
 <div align="center">
-Made with ❤️ by <b>ObedTechX</b> — Kenya 🇰🇪
+
+```
+╔═══════════════════════════════════════════════════╗
+║   HUNTER XMD PRO — The bot that never sleeps 🤖   ║
+║         Powered by ObedTechX — Kenya 🇰🇪           ║
+╚═══════════════════════════════════════════════════╝
+```
+
+⭐ **Star this repo if it helped you!** ⭐
+
 </div>

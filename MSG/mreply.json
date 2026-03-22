@@ -1,0 +1,32 @@
+{
+  "BOT_NAME": "HUNTER XMD PRO",
+  "VERSION": "3.0.0",
+  "CREATED BY": "ObedTechX",
+  "replyMsg": {
+    "giveme": "*Type something, what do you think, who do you think I look like?*",
+    "giveut": "*Give a link or a text 😒*",
+    "not_fo": "*❌ I Couldn't find anything :(*",
+    "url": "*Give me a link 😐*",
+    "valid_url": "*This URL is invalid ❌ Please give me a valid URL ❗*",
+    "size_big": "*File size is too big ❌ Max allowed: 100MB*",
+    "own_cmd": "*🔒 This is an Owner Command only ‼️*",
+    "pre_cmd": "*🚫 You are not a Premium User*\n\n✅ *Get Premium for just KES 100/month*\n\n👉 https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION",
+    "ald_set": "*Already set ✅* No changes needed 🙂",
+    "only_gp": "*⚠️ This is a Group Command only ❗*",
+    "inb_cmd": "*📩 This is an Inbox/DM Command only ❗*",
+    "give_adm": "*Give me Admin rights first 😹💪🏻*",
+    "you_adm": "*You must be an Admin first 😒*",
+    "need_jid": "*Please provide a JID ❓*",
+    "valid_jid": "*Invalid JID ❌ Please provide a valid JID ❗*",
+    "ald_approve_jid": "*JID approved ✔️*",
+    "ald_approve_alljid": "*All JIDs approved ✔️*",
+    "ald_reapprove_jid": "*JID approval revoked ✔️*",
+    "ald_reapprove_alljid": "*All JID approvals revoked ✔️*",
+    "band_users": "*❌ You are banned from using commands*\n\n*Please contact the Bot Owner to remove your ban 👨‍🔧*",
+    "not_premium": "*⛔ Premium feature only!*\n\nUpgrade at: https://wa.me/254701082940?text=GET_PREMIUM",
+    "cool_down": "*⏳ Please wait before using this command again!*",
+    "cmd_disable": "*🚫 This command is currently disabled*",
+    "success": "*✅ Done successfully!*",
+    "erro": "*❌ Error occurred. Please try again!*"
+  }
+}

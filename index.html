@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUNTER XMD PRO — ObedTechX Data Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #020810;
+  --surface: #071020;
+  --surface2: #0c1a35;
+  --surface3: #112244;
+  --accent: #00f0ff;
+  --accent-dim: rgba(0,240,255,0.12);
+  --purple: #8b5cf6;
+  --purple-dim: rgba(139,92,246,0.12);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.12);
+  --red: #ef4444;
+  --text: #e2e8f0;
+  --muted: #4a6080;
+  --border: rgba(0,240,255,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Exo 2',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Animated background */
+.bg-anim{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 5%, rgba(0,240,255,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 90%, rgba(139,92,246,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(16,185,129,0.02) 0%, transparent 70%);
+}
+.bg-grid{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,240,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.025) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+.scan-line{
+  position:fixed;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  animation:scan 8s linear infinite;
+  z-index:1;opacity:0.3;
+}
+@keyframes scan{from{top:0}to{top:100vh}}
+
+/* ── HEADER ── */
+header{
+  position:relative;z-index:100;
+  background:rgba(7,16,32,0.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  padding:0 40px;
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0;flex-wrap:wrap;gap:14px;
+}
+.brand{display:flex;align-items:center;gap:16px;}
+.brand-logo{
+  width:54px;height:54px;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  box-shadow:0 0 24px rgba(0,240,255,0.4),0 0 48px rgba(139,92,246,0.2);
+  animation:logopulse 3s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes logopulse{
+  0%,100%{box-shadow:0 0 24px rgba(0,240,255,0.4),0 0 48px rgba(139,92,246,0.2);}
+  50%{box-shadow:0 0 40px rgba(0,240,255,0.7),0 0 70px rgba(139,92,246,0.4);}
+}
+.brand-name{
+  font-family:'Orbitron',monospace;
+  font-size:1.35rem;font-weight:900;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:3px;line-height:1;
+}
+.brand-sub{
+  font-size:0.68rem;color:var(--muted);
+  letter-spacing:4px;text-transform:uppercase;margin-top:4px;
+}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pill{
+  padding:5px 14px;border-radius:999px;
+  font-family:'Share Tech Mono',monospace;font-size:0.68rem;
+  letter-spacing:1px;text-transform:uppercase;border:1px solid;
+}
+.pill-cyan{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.pill-purple{border-color:var(--purple);color:var(--purple);background:var(--purple-dim);}
+.pill-green{border-color:var(--green);color:var(--green);background:var(--green-dim);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:90;
+  background:rgba(7,16,32,0.97);
+  border-bottom:1px solid rgba(0,240,255,0.06);
+  backdrop-filter:blur(20px);
+  display:flex;gap:2px;padding:10px 40px;
+  overflow-x:auto;
+}
+nav::-webkit-scrollbar{height:2px;}
+nav::-webkit-scrollbar-thumb{background:var(--purple);}
+.tab{
+  padding:9px 20px;border-radius:8px;
+  font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;
+  cursor:pointer;border:1px solid transparent;
+  color:var(--muted);transition:all 0.2s;
+}
+.tab:hover{color:var(--text);border-color:var(--border);background:var(--accent-dim);}
+.tab.active{
+  color:#000;background:var(--accent);border-color:var(--accent);
+  box-shadow:0 0 18px rgba(0,240,255,0.5);
+}
+
+/* ── MAIN ── */
+main{
+  position:relative;z-index:10;
+  padding:36px 40px;max-width:1500px;margin:0 auto;
+}
+.page{display:none;animation:fadeup 0.35s ease;}
+.page.active{display:block;}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* Section header */
+.sec-head{
+  display:flex;align-items:center;gap:14px;margin-bottom:28px;
+}
+.sec-icon{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  background:linear-gradient(135deg,var(--accent-dim),var(--purple-dim));
+  border:1px solid var(--border);flex-shrink:0;
+}
+.sec-title{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;color:var(--accent);}
+.sec-sub{font-size:0.78rem;color:var(--muted);margin-top:3px;}
+
+/* ── STAT CARDS ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:32px;}
+.stat{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:22px 20px;
+  transition:all 0.2s;cursor:default;
+}
+.stat:hover{transform:translateY(-3px);}
+.stat-n{font-family:'Orbitron',monospace;font-size:2.2rem;font-weight:900;line-height:1;}
+.stat-l{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:6px;}
+.stat-c .stat-n{color:var(--accent);}
+.stat-c:hover{border-color:var(--accent);box-shadow:0 0 20px rgba(0,240,255,0.15);}
+.stat-p .stat-n{color:var(--purple);}
+.stat-p:hover{border-color:var(--purple);box-shadow:0 0 20px rgba(139,92,246,0.15);}
+.stat-g .stat-n{color:var(--green);}
+.stat-g:hover{border-color:var(--green);box-shadow:0 0 20px rgba(16,185,129,0.15);}
+.stat-o .stat-n{color:var(--gold);}
+.stat-o:hover{border-color:var(--gold);box-shadow:0 0 20px rgba(245,158,11,0.15);}
+
+/* ── TABLE ── */
+.tbl{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+}
+.tbl-head{
+  display:grid;padding:13px 22px;
+  background:rgba(0,240,255,0.04);
+  border-bottom:1px solid rgba(0,240,255,0.1);
+  font-family:'Orbitron',monospace;font-size:0.6rem;
+  color:var(--accent);letter-spacing:2px;text-transform:uppercase;
+}
+.tbl-row{
+  display:grid;padding:14px 22px;
+  border-bottom:1px solid rgba(255,255,255,0.035);
+  transition:background 0.15s;align-items:center;
+  gap:16px;
+}
+.tbl-row:last-child{border-bottom:none;}
+.tbl-row:hover{background:rgba(0,240,255,0.03);}
+/* grid cols */
+.g-reply{grid-template-columns:160px 1fr 90px;}
+.g-media{grid-template-columns:120px 1fr 100px;}
+.g-msg{grid-template-columns:180px 1fr;}
+.g-url{grid-template-columns:110px 1fr 90px;}
+
+/* tags */
+.tag{
+  display:inline-block;padding:4px 12px;border-radius:6px;
+  font-family:'Share Tech Mono',monospace;font-size:0.76rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+.tag-c{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(0,240,255,0.25);}
+.tag-p{background:var(--purple-dim);color:#c4b5fd;border:1px solid rgba(139,92,246,0.25);}
+.tag-g{background:var(--green-dim);color:#6ee7b7;border:1px solid rgba(16,185,129,0.25);}
+.tag-o{background:var(--gold-dim);color:#fcd34d;border:1px solid rgba(245,158,11,0.25);}
+
+.cell-text{font-size:0.82rem;color:var(--text);line-height:1.5;word-break:break-word;}
+.cell-url{
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;
+  color:#7dd3fc;word-break:break-all;text-decoration:none;
+  transition:color 0.2s;
+}
+.cell-url:hover{color:#fff;text-decoration:underline;}
+
+/* ── BUTTONS ── */
+.btn-copy{
+  padding:6px 14px;border-radius:7px;
+  border:1px solid rgba(0,240,255,0.3);
+  background:var(--accent-dim);color:var(--accent);
+  font-family:'Share Tech Mono',monospace;font-size:0.68rem;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.btn-copy:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+.btn-copy.ok{background:var(--green);border-color:var(--green);color:#fff;}
+
+.btn-dl{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  color:#fff;font-family:'Orbitron',monospace;font-size:0.68rem;
+  font-weight:700;letter-spacing:1px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,240,255,0.25);transition:all 0.2s;
+  text-decoration:none;
+}
+.btn-dl:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,240,255,0.4);}
+
+.btn-primary{
+  padding:10px 22px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  color:#000;font-family:'Orbitron',monospace;font-size:0.7rem;
+  font-weight:700;cursor:pointer;letter-spacing:1px;
+  transition:all 0.2s;box-shadow:0 4px 14px rgba(0,240,255,0.3);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(0,240,255,0.5);}
+
+/* ── CODE BLOCK ── */
+.code-box{
+  background:#030c1a;border:1px solid rgba(0,240,255,0.12);
+  border-radius:14px;overflow:hidden;
+}
+.code-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px;
+  background:rgba(0,240,255,0.04);
+  border-bottom:1px solid rgba(0,240,255,0.08);
+}
+.code-bar span{font-family:'Orbitron',monospace;font-size:0.6rem;color:var(--accent);letter-spacing:1px;}
+pre{
+  padding:20px 22px;overflow-x:auto;
+  font-family:'Share Tech Mono',monospace;font-size:0.78rem;
+  color:#a5f3fc;line-height:1.75;
+  max-height:380px;overflow-y:auto;
+}
+pre::-webkit-scrollbar{width:4px;height:4px;}
+pre::-webkit-scrollbar-thumb{background:var(--purple);border-radius:4px;}
+
+/* ── DOWNLOAD CARDS ── */
+.dl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;}
+.dl-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:26px;
+  transition:all 0.25s;
+}
+.dl-card:hover{transform:translateY(-4px);}
+.dl-card-title{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;margin-bottom:8px;}
+.dl-card-desc{font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:20px;}
+.dl-badge{
+  display:inline-block;padding:3px 10px;border-radius:5px;
+  font-size:0.65rem;font-family:'Share Tech Mono',monospace;
+  margin-bottom:14px;
+}
+
+/* ── URL GENERATOR ── */
+.gen-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:28px;margin-bottom:24px;
+}
+.gen-box h3{
+  font-family:'Orbitron',monospace;font-size:0.85rem;
+  color:var(--accent);margin-bottom:6px;
+}
+.gen-box p{font-size:0.8rem;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.input-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+.input-row input{
+  flex:1;min-width:220px;
+  padding:11px 16px;border-radius:9px;
+  background:var(--surface2);border:1px solid rgba(0,240,255,0.2);
+  color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.82rem;
+  outline:none;transition:border-color 0.2s;
+}
+.input-row input:focus{border-color:var(--accent);}
+.input-row input::placeholder{color:var(--muted);}
+
+.generated-urls{margin-top:16px;}
+.url-result{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:8px;
+  background:rgba(0,0,0,0.3);border:1px solid rgba(0,240,255,0.08);
+  margin-bottom:8px;flex-wrap:wrap;
+}
+.url-result:last-child{margin-bottom:0;}
+.url-file{
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;
+  color:var(--gold);min-width:180px;flex-shrink:0;
+}
+.url-raw{
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;
+  color:#7dd3fc;flex:1;word-break:break-all;
+}
+.url-copy-btn{
+  padding:5px 12px;border-radius:6px;
+  border:1px solid rgba(0,240,255,0.2);
+  background:rgba(0,240,255,0.06);color:var(--accent);
+  font-size:0.65rem;font-family:'Share Tech Mono',monospace;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0;
+}
+.url-copy-btn:hover{background:var(--accent);color:#000;}
+
+/* ── ALERT ── */
+.alert{
+  padding:14px 18px;border-radius:10px;
+  border-left:3px solid;margin-bottom:20px;
+  font-size:0.82rem;line-height:1.55;
+}
+.alert-cyan{border-color:var(--accent);background:var(--accent-dim);color:#a5f3fc;}
+.alert-gold{border-color:var(--gold);background:var(--gold-dim);color:#fcd34d;}
+.alert-green{border-color:var(--green);background:var(--green-dim);color:#6ee7b7;}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:28px;right:28px;z-index:9999;
+  background:var(--green);color:#fff;
+  padding:12px 22px;border-radius:10px;
+  font-family:'Share Tech Mono',monospace;font-size:0.8rem;
+  box-shadow:0 8px 28px rgba(0,0,0,0.5);
+  transform:translateY(80px);opacity:0;
+  transition:all 0.3s;pointer-events:none;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+
+/* ── OVERVIEW GRID ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px;}
+@media(max-width:900px){.info-grid{grid-template-columns:1fr;}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  header{padding:0 16px;}
+  nav{padding:8px 14px;}
+  main{padding:20px 16px;}
+  .g-reply,.g-media{grid-template-columns:1fr;}
+  .g-msg{grid-template-columns:1fr;}
+  .tbl-head{display:none;}
+  .g-url{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-anim"></div>
+<div class="bg-grid"></div>
+<div class="scan-line"></div>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">🤖</div>
+      <div>
+        <div class="brand-name">HUNTER XMD PRO</div>
+        <div class="brand-sub">Data Manager by ObedTechX</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="pill pill-cyan">v3.0.0</span>
+      <span class="pill pill-green">● Live</span>
+      <span class="pill pill-purple">ObedTechX</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="tab active" onclick="showPage('overview',this)">📊 Overview</div>
+  <div class="tab" onclick="showPage('autoreply',this)">💬 Auto Reply</div>
+  <div class="tab" onclick="showPage('autosticker',this)">🎭 Stickers</div>
+  <div class="tab" onclick="showPage('autovoice',this)">🎵 Voice Notes</div>
+  <div class="tab" onclick="showPage('mreply',this)">📋 System Msgs</div>
+  <div class="tab" onclick="showPage('rawurls',this)">🔗 All URLs</div>
+  <div class="tab" onclick="showPage('generator',this)">⚙️ URL Generator</div>
+  <div class="tab" onclick="showPage('downloads',this)">⬇️ Downloads</div>
+</nav>
+
+<main>
+
+<!-- ══════════════════ OVERVIEW ══════════════════ -->
+<div id="overview" class="page active">
+  <div class="sec-head">
+    <div class="sec-icon">📊</div>
+    <div>
+      <div class="sec-title">Dashboard Overview</div>
+      <div class="sec-sub">HUNTER XMD PRO — Complete WhatsApp Bot Data Manager</div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat stat-c"><div class="stat-n">29</div><div class="stat-l">Auto Reply Keys</div></div>
+    <div class="stat stat-p"><div class="stat-n">10</div><div class="stat-l">Sticker Triggers</div></div>
+    <div class="stat stat-g"><div class="stat-n">6</div><div class="stat-l">Voice Note Keys</div></div>
+    <div class="stat stat-o"><div class="stat-n">25</div><div class="stat-l">System Messages</div></div>
+  </div>
+  <div class="alert alert-green">✅ All JSON files updated & syntax-fixed — <code>autovoice.json</code> missing comma repaired. New keywords added across all files.</div>
+  <div class="code-box">
+    <div class="code-bar"><span>📦 BOT CONFIG</span><span style="color:var(--green)">● ALL VALID</span></div>
+    <pre>{
+  "BOT_NAME"    : "HUNTER XMD PRO",
+  "VERSION"     : "3.0.0",
+  "CREATED_BY"  : "ObedTechX",
+  "GITHUB"      : "https://github.com/Obedweb3/ObedTech-data",
+  "CONTACT"     : "https://wa.me/254701082940",
+  "FILES"       : [
+                    "autoreply.json     — 29 keywords ✅",
+                    "autosticker.json   — 10 triggers  ✅",
+                    "autovoice.json     — 6 triggers   ✅ (comma fixed)",
+                    "MSG/mreply.json    — 25 messages  ✅"
+                  ],
+  "TOTAL_KEYS"  : 70,
+  "STATUS"      : "Ready to upload to GitHub 🚀"
+}</pre>
+  </div>
+  <div class="info-grid">
+    <div class="code-box">
+      <div class="code-bar"><span>🚀 HOW TO GET YOUR GITHUB RAW URLs</span></div>
+      <pre>1. Upload files to GitHub repo (must be Public)
+2. Open the file in your repo
+3. Click the "Raw" button (top right)
+4. Copy the URL from your browser
+
+Your URLs will look like:
+https://github.com/YOUR_USERNAME/
+  ObedTech-data/raw/refs/heads/main/
+  autoreply.json
+
+Use the ⚙️ URL Generator tab to
+auto-generate all your URLs at once!</pre>
+    </div>
+    <div class="code-box">
+      <div class="code-bar"><span>📋 REPO FOLDER STRUCTURE</span></div>
+      <pre>ObedTech-data/
+├── autoreply.json
+├── autosticker.json
+├── autovoice.json
+├── README.md
+├── .gitignore
+├── MSG/
+│   └── mreply.json
+├── autosticker/
+│   └── *.webp  ← your sticker files
+├── autovoice/
+│   └── menunew.m4a
+└── logo/</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ AUTO REPLY ══════════════════ -->
+<div id="autoreply" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">💬</div>
+    <div>
+      <div class="sec-title">Auto Reply</div>
+      <div class="sec-sub">autoreply.json — 29 keyword → text response mappings</div>
+    </div>
+  </div>
+  <div class="tbl">
+    <div class="tbl-head g-reply"><span>Keyword</span><span>Bot Response</span><span>Action</span></div>
+    <div id="reply-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ STICKERS ══════════════════ -->
+<div id="autosticker" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">🎭</div>
+    <div>
+      <div class="sec-title">Auto Sticker</div>
+      <div class="sec-sub">autosticker.json — 10 keyword → sticker URL mappings</div>
+    </div>
+  </div>
+  <div class="alert alert-cyan">💡 After uploading your <code>.webp</code> sticker files to GitHub, update these URLs with your raw GitHub links using the ⚙️ URL Generator.</div>
+  <div class="tbl">
+    <div class="tbl-head g-media"><span>Keyword</span><span>Sticker URL</span><span>Copy URL</span></div>
+    <div id="sticker-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ VOICE ══════════════════ -->
+<div id="autovoice" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">🎵</div>
+    <div>
+      <div class="sec-title">Auto Voice</div>
+      <div class="sec-sub">autovoice.json — 6 keyword → audio URL mappings • BUG FIXED: missing comma repaired</div>
+    </div>
+  </div>
+  <div class="alert alert-gold">🔧 <strong>Fix applied:</strong> Missing comma between <code>"OBED"</code> and <code>"hello"</code> entries has been corrected. File is now valid JSON.</div>
+  <div class="tbl">
+    <div class="tbl-head g-media"><span>Keyword</span><span>Audio URL</span><span>Copy URL</span></div>
+    <div id="voice-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ SYSTEM MSGS ══════════════════ -->
+<div id="mreply" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">📋</div>
+    <div>
+      <div class="sec-title">System Messages</div>
+      <div class="sec-sub">MSG/mreply.json — 25 bot system reply messages</div>
+    </div>
+  </div>
+  <div class="tbl">
+    <div class="tbl-head g-msg"><span>Key</span><span>Message Text</span></div>
+    <div id="mreply-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ ALL URLS ══════════════════ -->
+<div id="rawurls" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">🔗</div>
+    <div>
+      <div class="sec-title">All Raw URLs</div>
+      <div class="sec-sub">Every URL referenced across all config files — one place, all copyable</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px;">
+    <div style="font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--accent);margin-bottom:12px;letter-spacing:1px;">📄 JSON CONFIG FILES (after GitHub upload)</div>
+    <div class="tbl">
+      <div id="json-url-rows"></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px;">
+    <div style="font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--purple);margin-bottom:12px;letter-spacing:1px;">🎭 STICKER URLs</div>
+    <div class="tbl">
+      <div id="sticker-url-rows"></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px;">
+    <div style="font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--green);margin-bottom:12px;letter-spacing:1px;">🎵 VOICE NOTE URLs</div>
+    <div class="tbl">
+      <div id="voice-url-rows"></div>
+    </div>
+  </div>
+
+  <div>
+    <div style="font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--gold);margin-bottom:12px;letter-spacing:1px;">👾 CONTACT / PREMIUM URLs</div>
+    <div class="tbl">
+      <div class="tbl-row g-url">
+        <span class="tag tag-o">premium</span>
+        <span class="cell-url">https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION</span>
+        <button class="btn-copy" onclick="cp('https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION',this)">Copy</button>
+      </div>
+      <div class="tbl-row g-url">
+        <span class="tag tag-o">contact</span>
+        <span class="cell-url">https://wa.me/254701082940</span>
+        <button class="btn-copy" onclick="cp('https://wa.me/254701082940',this)">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ URL GENERATOR ══════════════════ -->
+<div id="generator" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">⚙️</div>
+    <div>
+      <div class="sec-title">GitHub URL Generator</div>
+      <div class="sec-sub">Enter your GitHub username and repo name — get all raw URLs instantly</div>
+    </div>
+  </div>
+
+  <div class="gen-box">
+    <h3>🔧 Generate Your Raw URLs</h3>
+    <p>After uploading your files to GitHub, enter your details below to generate all the raw URLs your bot needs. Make sure your repo is <strong>Public</strong>.</p>
+    <div class="input-row">
+      <input type="text" id="gh-user" placeholder="GitHub username (e.g. Obedweb3)" oninput="generateURLs()">
+      <input type="text" id="gh-repo" placeholder="Repo name (e.g. ObedTech-data)" oninput="generateURLs()">
+      <input type="text" id="gh-branch" placeholder="Branch (default: main)" oninput="generateURLs()">
+    </div>
+    <div class="generated-urls" id="gen-output">
+      <div class="alert alert-cyan">👆 Enter your GitHub username and repo name above to generate your URLs.</div>
+    </div>
+  </div>
+
+  <div class="gen-box">
+    <h3>📋 How Raw GitHub URLs Work</h3>
+    <p>GitHub raw URLs follow this exact pattern:</p>
+    <div class="code-box" style="margin-top:12px;">
+      <pre>https://github.com/{USERNAME}/{REPO}/raw/refs/heads/{BRANCH}/{FILE_PATH}
+
+Examples:
+https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autoreply.json
+https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autosticker.json
+https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice.json
+https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/MSG/mreply.json
+https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a</pre>
+    </div>
+  </div>
+
+  <div class="gen-box">
+    <h3>🚀 Step-by-Step: Upload to GitHub</h3>
+    <div class="code-box" style="margin-top:12px;">
+      <pre>STEP 1 — Create a new GitHub repository
+  → Go to github.com → New Repository
+  → Name it: ObedTech-data
+  → Set to PUBLIC ← important!
+  → Click Create Repository
+
+STEP 2 — Upload your files
+  → Click "uploading an existing file"
+  → Drag and drop all your files
+  → Keep the folder structure intact:
+      autoreply.json
+      autosticker.json
+      autovoice.json
+      README.md
+      MSG/mreply.json
+      autovoice/menunew.m4a
+      autosticker/*.webp files
+
+STEP 3 — Commit the files
+  → Scroll down → click "Commit changes"
+  → Wait for upload to complete
+
+STEP 4 — Get your raw URLs
+  → Come back to this ⚙️ URL Generator tab
+  → Enter your username + repo name
+  → Copy the generated URLs into your bot!</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DOWNLOADS ══════════════════ -->
+<div id="downloads" class="page">
+  <div class="sec-head">
+    <div class="sec-icon">⬇️</div>
+    <div>
+      <div class="sec-title">Downloads</div>
+      <div class="sec-sub">Download all updated & fixed files — ready to upload to GitHub</div>
+    </div>
+  </div>
+  <div class="alert alert-green">✅ All files are syntax-validated JSON. <code>autovoice.json</code> comma bug is fixed. Download everything and upload directly to GitHub.</div>
+  <div class="dl-grid" id="dl-grid"></div>
+</div>
+
+</main>
+
+<div id="toast">✅ Copied!</div>
+
+<script>
+// ════════════════ DATA ════════════════
+const AUTOREPLY = {"Hi":"*💖 HI!* How are you doing today? 😊","Hello":"*👋 Hello there!* Welcome to HUNTER XMD PRO 🤖","Hey":"*🔥 Hey!* What's up? 😎","Good Morning":"*Good Morning 🌅* Hope your day is amazing!","Good Night":"*Good Night 🌉* Sweet dreams! 💫","Good Afternoon":"*Good Afternoon ☀️* Hope your day is going well!","Bye":"*Bye bye... 👋* Take care, see you soon!","Thanks":"*You're welcome! 😊* Always happy to help 💪","Thank you":"*No problem at all! 🙏* That's what I'm here for 🤖","Help":"*🆘 Need Help?* Type *.menu* to see all available commands!","Menu":"*📋 Opening Menu...* Type *.menu* for the full command list!","Aslam o Alykum":"> *Walykum Salam ❤️‍🔥🤌🏻* Welcome brother!","JazakAllah":"*Wa Iyyak 🤲* May Allah bless you too!","Alhamdulillah":"*Alhamdulillah 🌙* Indeed, all praise is to Allah!","owner":"*👑 Owner: ObedTechX* — The brain behind HUNTER XMD PRO 🤖","Obed":"*💻 ObedTechX* — Creator & Developer of HUNTER XMD PRO 🚀","Criss":"*🐵 Criss Vevo* — Kis Na Yaad Kia Mujhe?","link":"*🌚 Raha Nahi Jata 🙌😂* No links please!","Haram":"*Haram Haram Haram 🙈🤣* Astaghfirullah!","dafa":"*dfm. 😣* Chale jao!","dhur":"*Dhur bagrt. 🔪* Mat satao!","hmm":"> *Hamm... 🌚* Kya soch rahe ho?","lanat":"*Lakhhhhhhhhhh Di Lanat 🙌😂* Nahi nahi nahi!","uff":"*💋 Hyee!* Kya hua?","love":"*Lub you too 💗😁* Awww so sweet!","sticker":"*😜 Sticker time!* Send a keyword to get stickers!","voice":"*🎵 Voice notes available!* Send a keyword for audio!","premium":"*👾 Premium User Benefits:*\n✅ Unlimited commands\n✅ Priority support\n✅ Exclusive features\n\n*Contact:* https://wa.me/254701082940?text=GET_PREMIUM","bot":"*🤖 HUNTER XMD PRO v3.0.0*\nPowered by ObedTechX ⚡\nType *.menu* for commands!","alive":"*✅ Yes, I'm online and ready!* 🤖⚡","ping":"*🏓 Pong!* Bot is active and running smoothly ✅"};
+
+const AUTOSTICKER = {"bye":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241108-WA0028.webp","love":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0007.webp","jawad":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0008.webp","khan":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0004.webp","hi":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0002.webp","sad":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0003.webp","angry":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0005.webp","happy":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0006.webp","thanks":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0009.webp","wow":"https://github.com/criss-vevo/CRISS-DATA/raw/main/autosticker/STK-20241110-WA0010.webp"};
+
+const AUTOVOICE = {"hi":"https://github.com/criss-vevo/CRISS-DATA/raw/refs/heads/main/autovoice/menunew.m4a","OBED":"https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a","hello":"https://github.com/criss-vevo/CRISS-DATA/raw/refs/heads/main/autovoice/Quran.m4a","menu":"https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a","quran":"https://github.com/criss-vevo/CRISS-DATA/raw/refs/heads/main/autovoice/Quran.m4a","welcome":"https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/autovoice/menunew.m4a"};
+
+const MREPLY_DATA = {"giveme":"*Type something, what do you think, who do you think I look like?*","giveut":"*Give a link or a text 😒*","not_fo":"*❌ I Couldn't find anything :(*","url":"*Give me a link 😐*","valid_url":"*This URL is invalid ❌ Please give me a valid URL ❗*","size_big":"*File size is too big ❌ Max allowed: 100MB*","own_cmd":"*🔒 This is an Owner Command only ‼️*","pre_cmd":"*🚫 You are not a Premium User*\n\n✅ *Get Premium for just KES 100/month*\n\n👉 https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION","ald_set":"*Already set ✅* No changes needed 🙂","only_gp":"*⚠️ This is a Group Command only ❗*","inb_cmd":"*📩 This is an Inbox/DM Command only ❗*","give_adm":"*Give me Admin rights first 😹💪🏻*","you_adm":"*You must be an Admin first 😒*","need_jid":"*Please provide a JID ❓*","valid_jid":"*Invalid JID ❌ Please provide a valid JID ❗*","ald_approve_jid":"*JID approved ✔️*","ald_approve_alljid":"*All JIDs approved ✔️*","ald_reapprove_jid":"*JID approval revoked ✔️*","ald_reapprove_alljid":"*All JID approvals revoked ✔️*","band_users":"*❌ You are banned from using commands*\n\n*Please contact the Bot Owner to remove your ban 👨‍🔧*","not_premium":"*⛔ Premium feature only!*\n\nUpgrade at: https://wa.me/254701082940?text=GET_PREMIUM","cool_down":"*⏳ Please wait before using this command again!*","cmd_disable":"*🚫 This command is currently disabled*","success":"*✅ Done successfully!*","erro":"*❌ Error occurred. Please try again!*"};
+
+const FILES_FOR_URLS = [
+  {label:'autoreply.json',path:'autoreply.json'},
+  {label:'autosticker.json',path:'autosticker.json'},
+  {label:'autovoice.json',path:'autovoice.json'},
+  {label:'MSG/mreply.json',path:'MSG/mreply.json'},
+  {label:'autovoice/menunew.m4a',path:'autovoice/menunew.m4a'},
+];
+
+// ════════════════ HELPERS ════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function cp(text, btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    if(btn){
+      const orig = btn.textContent;
+      btn.textContent='✓ Done'; btn.classList.add('ok');
+      setTimeout(()=>{btn.textContent=orig;btn.classList.remove('ok');},1800);
+    }
+    const t=document.getElementById('toast');
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000);
+  });
+}
+
+function showPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+function dlJSON(filename, data){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=filename;a.click();
+}
+function dlText(filename, text){
+  const blob=new Blob([text],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=filename;a.click();
+}
+
+// ════════════════ RENDER ════════════════
+function renderReply(){
+  document.getElementById('reply-body').innerHTML = Object.entries(AUTOREPLY).map(([k,v])=>
+    `<div class="tbl-row g-reply">
+      <span class="tag tag-c">${esc(k)}</span>
+      <span class="cell-text">${esc(v)}</span>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(v)},this)">Copy</button>
+    </div>`).join('');
+}
+
+function renderSticker(){
+  document.getElementById('sticker-body').innerHTML = Object.entries(AUTOSTICKER).map(([k,v])=>
+    `<div class="tbl-row g-media">
+      <span class="tag tag-p">${esc(k)}</span>
+      <a class="cell-url" href="${esc(v)}" target="_blank">${esc(v)}</a>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(v)},this)">Copy URL</button>
+    </div>`).join('');
+}
+
+function renderVoice(){
+  document.getElementById('voice-body').innerHTML = Object.entries(AUTOVOICE).map(([k,v])=>
+    `<div class="tbl-row g-media">
+      <span class="tag tag-g">${esc(k)}</span>
+      <a class="cell-url" href="${esc(v)}" target="_blank">${esc(v)}</a>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(v)},this)">Copy URL</button>
+    </div>`).join('');
+}
+
+function renderMreply(){
+  document.getElementById('mreply-body').innerHTML = Object.entries(MREPLY_DATA).map(([k,v])=>
+    `<div class="tbl-row g-msg">
+      <span class="tag tag-c">${esc(k)}</span>
+      <span class="cell-text">${esc(v)}</span>
+    </div>`).join('');
+}
+
+function renderAllURLs(){
+  const BASE='https://github.com/Obedweb3/ObedTech-data/raw/refs/heads/main/';
+  document.getElementById('json-url-rows').innerHTML = FILES_FOR_URLS.map(f=>{
+    const url=BASE+f.path;
+    return `<div class="tbl-row g-url">
+      <span class="tag tag-o">${esc(f.label)}</span>
+      <span class="cell-url">${esc(url)}</span>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(url)},this)">Copy</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('sticker-url-rows').innerHTML = Object.entries(AUTOSTICKER).map(([k,v])=>
+    `<div class="tbl-row g-url">
+      <span class="tag tag-p">${esc(k)}</span>
+      <span class="cell-url">${esc(v)}</span>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(v)},this)">Copy</button>
+    </div>`).join('');
+
+  document.getElementById('voice-url-rows').innerHTML = Object.entries(AUTOVOICE).map(([k,v])=>
+    `<div class="tbl-row g-url">
+      <span class="tag tag-g">${esc(k)}</span>
+      <span class="cell-url">${esc(v)}</span>
+      <button class="btn-copy" onclick="cp(${JSON.stringify(v)},this)">Copy</button>
+    </div>`).join('');
+}
+
+function renderDownloads(){
+  const MREPLY_FULL = {"BOT_NAME":"HUNTER XMD PRO","VERSION":"3.0.0","CREATED BY":"ObedTechX","replyMsg":MREPLY_DATA};
+  const cards=[
+    {title:'autoreply.json',color:'var(--accent)',badge:'29 keywords',badgeClass:'tag-c',desc:'All auto text reply keyword mappings. Fully expanded with greetings, Islamic phrases, bot info, premium & status commands.',data:AUTOREPLY,file:'autoreply.json',type:'json'},
+    {title:'autosticker.json',color:'var(--purple)',badge:'10 stickers',badgeClass:'tag-p',desc:'Keyword to sticker URL mappings. Includes sad, angry, happy, wow, thanks — 5 new triggers added.',data:AUTOSTICKER,file:'autosticker.json',type:'json'},
+    {title:'autovoice.json',color:'var(--green)',badge:'6 voices • FIXED',badgeClass:'tag-g',desc:'Keyword to voice note URL mappings. Critical bug fixed: missing comma repaired. Added menu, quran, welcome triggers.',data:AUTOVOICE,file:'autovoice.json',type:'json'},
+    {title:'MSG/mreply.json',color:'var(--gold)',badge:'25 messages',badgeClass:'tag-o',desc:'Full bot system messages. Fixed typos, added not_premium, cool_down, cmd_disable and success messages.',data:MREPLY_FULL,file:'mreply.json',type:'json'},
+    {title:'README.md',color:'#f472b6',badge:'GitHub ready',badgeClass:'tag-p',desc:'Professional README for your GitHub repo. Includes raw URL table, folder structure, step-by-step upload guide.',data:null,file:'README.md',type:'readme'},
+  ];
+
+  document.getElementById('dl-grid').innerHTML = cards.map(c=>`
+    <div class="dl-card" style="border-color:${c.color}22;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="dl-card-title" style="color:${c.color}">📄 ${c.title}</div>
+      </div>
+      <span class="dl-badge ${c.badgeClass}" style="margin-bottom:12px;display:inline-block;">${c.badge}</span>
+      <div class="dl-card-desc">${c.desc}</div>
+      <button class="btn-dl" onclick="handleDL('${c.file}','${c.type}')">⬇️ Download ${c.title}</button>
+    </div>`).join('');
+}
+
+function handleDL(file, type){
+  const MREPLY_FULL = {"BOT_NAME":"HUNTER XMD PRO","VERSION":"3.0.0","CREATED BY":"ObedTechX","replyMsg":MREPLY_DATA};
+  const map = {
+    'autoreply.json':{data:AUTOREPLY},
+    'autosticker.json':{data:AUTOSTICKER},
+    'autovoice.json':{data:AUTOVOICE},
+    'mreply.json':{data:MREPLY_FULL},
+  };
+  if(type==='readme'){
+    dlText('README.md', getReadme());
+  } else {
+    dlJSON(file, map[file].data);
+  }
+}
+
+// ════════════════ URL GENERATOR ════════════════
+function generateURLs(){
+  const user = document.getElementById('gh-user').value.trim();
+  const repo = document.getElementById('gh-repo').value.trim();
+  const branch = document.getElementById('gh-branch').value.trim() || 'main';
+  const out = document.getElementById('gen-output');
+
+  if(!user || !repo){
+    out.innerHTML='<div class="alert alert-cyan">👆 Enter your GitHub username and repo name above to generate your URLs.</div>';
+    return;
+  }
+
+  const base = `https://github.com/${user}/${repo}/raw/refs/heads/${branch}`;
+  const files = [
+    {key:'autoreply.json', path:'autoreply.json'},
+    {key:'autosticker.json', path:'autosticker.json'},
+    {key:'autovoice.json', path:'autovoice.json'},
+    {key:'MSG/mreply.json', path:'MSG/mreply.json'},
+    {key:'autovoice/menunew.m4a', path:'autovoice/menunew.m4a'},
+  ];
+
+  const allURLs = files.map(f=>({key:f.key, url:`${base}/${f.path}`}));
+  const allText = allURLs.map(f=>`${f.key}: ${f.url}`).join('\n');
+
+  out.innerHTML = `
+    <div class="alert alert-green" style="margin-bottom:14px;">✅ URLs generated for <strong>${user}/${repo}</strong> on branch <strong>${branch}</strong></div>
+    ${allURLs.map(f=>`
+    <div class="url-result">
+      <span class="url-file">${esc(f.key)}</span>
+      <span class="url-raw">${esc(f.url)}</span>
+      <button class="url-copy-btn" onclick="cp(${JSON.stringify(f.url)},this)">Copy</button>
+    </div>`).join('')}
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="cp(${JSON.stringify(allText)},this)">📋 Copy All URLs</button>
+    </div>`;
+}
+
+// ════════════════ README GENERATOR ════════════════
+function getReadme(){
+  const user = document.getElementById('gh-user')?.value.trim() || 'Obedweb3';
+  const repo = document.getElementById('gh-repo')?.value.trim() || 'ObedTech-data';
+  const base = `https://github.com/${user}/${repo}/raw/refs/heads/main`;
+  return `# 🤖 HUNTER XMD PRO — DATA REPO
+
+![Hunter XMD Pro](https://img.shields.io/badge/HUNTER%20XMD%20PRO-v3.0.0-00f5ff?style=for-the-badge&logo=whatsapp&logoColor=white)
+![Powered By](https://img.shields.io/badge/Powered%20By-ObedTechX-7c3aed?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-10b981?style=for-the-badge)
+
+**WhatsApp Bot Data Repository — Auto Reply, Stickers & Voice Notes**
+
+---
+
+## 📁 Repository Structure
+
+\`\`\`
+${repo}/
+├── 📄 autoreply.json          # Auto text reply keywords (29 triggers)
+├── 📄 autosticker.json        # Auto sticker keywords (10 triggers)
+├── 📄 autovoice.json          # Auto voice note keywords (6 triggers)
+├── 📁 MSG/
+│   └── 📄 mreply.json         # Bot system messages (25 messages)
+├── 📁 autosticker/            # Sticker media files (.webp)
+├── 📁 autovoice/              # Voice note media files (.m4a)
+│   └── 🎵 menunew.m4a
+└── 📁 logo/
+\`\`\`
+
+---
+
+## 🔗 Raw GitHub URLs
+
+| File | Raw URL |
+|------|---------|
+| \`autoreply.json\` | \`${base}/autoreply.json\` |
+| \`autosticker.json\` | \`${base}/autosticker.json\` |
+| \`autovoice.json\` | \`${base}/autovoice.json\` |
+| \`MSG/mreply.json\` | \`${base}/MSG/mreply.json\` |
+| \`autovoice/menunew.m4a\` | \`${base}/autovoice/menunew.m4a\` |
+
+---
+
+## 👨‍💻 Credits
+
+| Role | Name |
+|------|------|
+| 🧠 Creator | **ObedTechX** |
+| 🤖 Bot | **HUNTER XMD PRO v3.0.0** |
+| 🌍 Country | Kenya 🇰🇪 |
+
+## 💎 Premium
+📲 [wa.me/254701082940](https://wa.me/254701082940?text=GET_PREMIUM_CONNECTION) — KES 100/month
+
+---
+Made with ❤️ by **ObedTechX** — Kenya 🇰🇪
+`;
+}
+
+// ════════════════ INIT ════════════════
+renderReply();
+renderSticker();
+renderVoice();
+renderMreply();
+renderAllURLs();
+renderDownloads();
+</script>
+</body>
+</html>
